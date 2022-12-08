@@ -1,6 +1,14 @@
 package org.example;
+
+import org.example.file.DirectoryUtils;
+import org.example.file.FileUtils;
+
 public class App {
     public static void main( String[] args ) {
-        System.out.println( "Hello World!" );
+        String dirName = "output";
+        String fileName = "result.csv";
+
+        DirectoryUtils.createDir(dirName);
+        FileUtils.createFile(dirName, fileName);
     }
 }
