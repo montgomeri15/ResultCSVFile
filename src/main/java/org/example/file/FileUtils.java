@@ -1,33 +1,37 @@
 package org.example.file;
 
-import java.io.IOException;
+import org.example.person.incomingdata.Person;
+
+import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.List;
 
 public class FileUtils {
-    public static final Path pathForFile(String dirName, String fileName){
-        Path path = Paths.get(dirName, fileName);
-        return path;
-    }
-
     public static java.io.File createFile(String dirName, String fileName) {
         try {
-            return Files.createFile(pathForFile(dirName, fileName)).toFile();
+            return Files.createFile(Paths.get(dirName, fileName)).toFile();
         } catch (IOException e) {
             System.err.println(e);
             return null;
         }
     }
 
-    public static boolean fileExists(String dirName, String fileName) {
-        return Files.exists(pathForFile(dirName, fileName));
+    public static void deleteFile(String dirName, String fileName) {
+        try {
+            Files.deleteIfExists(Paths.get(dirName, fileName));
+        } catch (IOException e) {
+            System.err.println(e);
+        }
     }
 
-    public static void deleteFile(String dirName, String fileName) {
-        if (fileExists(dirName, fileName)){
+    public static void writeToCSVFile(String dirName, String fileName, List<Person> personsToFile) {
+        for(Person person : personsToFile) {
             try {
-                Files.delete(pathForFile(dirName, fileName));
+                Files.write(Paths.get(dirName, fileName), person.personsListInBytes(),
+                        //For adding, not rewriting
+                        StandardOpenOption.APPEND);
             } catch (IOException e) {
                 System.err.println(e);
             }
