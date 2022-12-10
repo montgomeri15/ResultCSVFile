@@ -1,21 +1,19 @@
 package org.example.person.incomingdata;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @ToString
 
 public class Person {
-    private final String name;
-    private final int age;
-    private final Sex sex;
+    @NonNull private final String name;
+    @NonNull private final int age;
+    @NonNull private final Sex sex;
 
     public byte[] personsListInBytes() {
-        return (this.getName() + ",\t"+
-                this.getAge() + ",\t" +
+        return (this.getName() + ", "+
+                this.getAge() + ", " +
                 this.getSex() + "\n").getBytes();
     }
 }

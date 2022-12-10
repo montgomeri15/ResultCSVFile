@@ -72,6 +72,7 @@ public class RealProcessesTest {
     void testCorrectAddedListToCSV() throws IOException {
         String dirName = "dir";
         String fileName = "file.csv";
+        String expectedString = "[Pamela, 26, FEMALE, Angela, 30, FEMALE, Phyllis, 56, FEMALE, Jazz, 13, FEMALE]";
         Path path = Paths.get(dirName, fileName);
         List<Person> testPersons = List.of(
                 new Person("Pamela", 26, Sex.FEMALE),
@@ -85,11 +86,6 @@ public class RealProcessesTest {
         FileUtils.writeToCSVFile(dirName, fileName, testPersons);
 
         assertThat(Files.exists(path)).isTrue();
-        assertThat(Files.readAllLines(path).contains(
-                        "Pamela,\t26,\tFEMALE\n" +
-                        "Angela,\t30,\tFEMALE\n" +
-                        "Phyllis,\t56,\tFEMALE\n" +
-                        "Jazz,\t13,\tFEMALE"
-        ));
+        assertThat(Files.readAllLines(path)).hasToString(expectedString);
     }
 }
